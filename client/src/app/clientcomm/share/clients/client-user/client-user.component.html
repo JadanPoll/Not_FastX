@@ -1,0 +1,81 @@
+<div class="ps-2 pe-2 d-flex justify-content-between" (mouseenter)="enter()" (mouseleave)="leave()">
+
+    <div class="w-100 d-flex justify-content-between">
+        <div class="d-inline-block  p-0" >
+            <span [ngbPopover]="info">
+                
+                <span class="me-1">
+                    {{ clientName(false) }}
+                </span>
+                <em *ngIf="!inLobby()">{{ displayExtras() }}</em>
+                 
+                
+            </span>
+            &nbsp;
+            <span  class="me-1">
+                <span *ngIf="inLobby()" class="me-1">
+                    <em *ngIf="!showAdmit()" >(In Lobby)</em> 
+                    <div class="btn-group" *ngIf="showAdmit()">
+                        <button  class="btn  btn-primary pt-0 pb-0 m-0" (click)="editStatus('viewing')">Admit</button>
+                        <div class="btn-group " ngbDropdown>
+                            <button class="btn btn-primary  pt-0 pb-0 m-0 dropdown-toggle-split" ngbDropdownToggle></button>
+                            <div  ngbDropdownMenu class="p-0">
+                                <button ngbDropdownItem (click)="disconnect()">Disconnect</button>
+                            </div>
+                        </div>
+                    </div>
+                      
+                </span>
+                <div class="btn-group" *ngIf="showChangeStatus() && show() && !inLobby()" >
+                    <button 
+                    class="btn  btn-primary pt-0 pb-0 m-0" (click)="editStatus('input')">{{ client.status !== 'input'? "Control":"View" }}</button>
+                    <div class="btn-group " ngbDropdown>
+                        <button class="btn btn-primary  pt-0 pb-0 m-0 dropdown-toggle-split" ngbDropdownToggle></button>
+                            <div class="dropdown-menu" ngbDropdownMenu class="p-0">
+                                <button *ngIf="(client.status !== 'input')" ngbDropdownItem (click)="editStatus('input')">Control</button>
+                                <button *ngIf="(client.status !== 'viewing')" ngbDropdownItem (click)="editStatus('viewing')">Set Viewing</button>
+                                <button *ngIf="(client.client !== serverData.client)" ngbDropdownItem (click)="editStatus('lobby'); editRole('lobby')">Send to Lobby</button>
+                            </div>
+                    </div>
+                </div>
+               
+            </span>
+
+            <div  *ngIf="!inLobby() && show()" class="p-0 d-inline-block"  (openChange)="toggleOpen($event)">
+                <button [ngStyle]="{ 'visibility': (show() || extraIsOpen()) ? 'visible' : 'hidden' }" 
+                 class="p-0 m-0 btn btn-link"
+                 (click)="beginEditName()" >
+                    <fa-icon icon="cog"></fa-icon>
+                </button>
+            </div>
+           
+        </div>
+        <div *ngIf="0" class="d-inline-block">
+            <span  class="">
+                <span class="me-1" *ngIf="isMaster()">
+                    <fa-icon  icon="home"></fa-icon>
+                </span>
+                <span class="me-1" *ngIf="isOrganizer()">
+                    <fa-icon  icon="tools"></fa-icon>
+                </span>
+                <span class="me-1" *ngIf="isControlling()">
+                    <fa-icon  icon="gamepad"></fa-icon>
+                </span> 
+                <span class="me-1"  *ngIf="isMe()"  >
+                    <fa-icon icon="user"></fa-icon>
+                </span>
+
+            </span>
+            
+        </div>
+    </div>
+   
+    
+    
+</div>
+<ng-template #info>
+   <div *ngFor="let e of clientEntries()">{{ e[0]}}: {{ e[1] }}</div>
+</ng-template>
+
+
+

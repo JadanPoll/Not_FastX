@@ -1,0 +1,19 @@
+<app-notify></app-notify>
+<fx-client-share ></fx-client-share>
+<div *ngIf="comDebug" class="clientcomm card" [ngStyle]="{ width: !showForm() ? 'auto' : '500px' }">
+    <div>
+        <button class='btn btn-link float-end'  (click)="toggleForm()">ComDebug</button>
+    </div>
+    
+    <form *ngIf="showForm()" [formGroup]="form" class="card-body" (submit)="sendComm()">
+        <h5>ClientComm Debug Form</h5>
+        <label for="comm">Comm Channel</label>
+        <input type="text" id="comm" class="form-control " [value]="" formControlName="channel" />
+    
+        <label for="data">Data</label>
+        <textarea id="data" class="form-control " formControlName="data"></textarea>
+ 
+        <input type="submit" class="mt-2 btn btn-primary" value="Send!" />
+    </form>
+</div>
+

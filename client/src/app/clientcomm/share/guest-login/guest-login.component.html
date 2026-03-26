@@ -1,0 +1,31 @@
+<div class="card">
+    <form [formGroup]="form" (submit)="submit()" (cancel)="cancel()" class="card-body">
+        <div class="mb-3">
+            <label for="name">Display Name</label>&nbsp;
+            <span *ngIf="name.invalid && (name.dirty || name.touched)"
+                class="text-danger">
+                    <span *ngIf="name.errors?.required">Name is required</span>
+            </span>
+    
+            <input type="text" id="name" class="form-control " formControlName="name" required="required" />
+        </div>
+        <div class="mb-3">
+            <label for="email">Email</label>&nbsp;
+            <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                <span >Not a valid email</span>
+            </span>
+            <input type="email" id="email" class="form-control " formControlName="email" />
+        </div>
+        <div *ngIf="connectVal() === 'Connect'" class="mb-3">
+            <input type="submit" [value]="connectVal()" class="form-control  btn btn-primary btn-block" [disabled]="disabled" />
+        </div>
+        <div *ngIf="connectVal() !== 'Connect'" class="mb-3">
+            <div class="row m-0">
+                <input type="submit" [value]="connectVal()" class="col form-control  btn btn-primary me-3" [disabled]="disabled" />
+                <button type="cancel" class="col form-control  btn btn-outline-primary " >Cancel</button>
+            </div>
+        </div>
+    </form>
+    
+</div>
+

@@ -1,0 +1,28 @@
+<button (click)='open (content)' class='menu-button'>
+	<fa-icon icon="keyboard"></fa-icon>
+</button>
+
+<ng-template #content>
+	<section class='modal-body'>
+		<form [formGroup]="form">
+			<div class='mb-3'>
+				<label for='layout'>Layout</label>
+				<select class='form-control ' formControlName="layout" id='layout'>
+						<option *ngFor="let l of layouts.layouts" [ngValue]="l.id" >{{ l.name }}</option>
+				</select>
+			</div>
+			<div *ngIf="0" class='mb-3'>
+				<label for='type'>Type</label>
+				<select class='form-control ' formControlName="type" id="type">
+					<option *ngFor="let l of layouts.types" [ngValue]="l.id">{{ l.name }}</option>
+				</select>
+			</div>
+		</form>
+		<div  class="form-check" *ngIf="!touch">
+			<input type="checkbox" [(ngModel)]="onscreenKeyboard" 
+			class="form-check-input"
+			 (change)="onKeyboardChange(onscreenKeyboard ? true : false)" />
+			<label class="form-check-label">Show Onscreen Keyboard</label>
+		</div>
+	</section>
+</ng-template>

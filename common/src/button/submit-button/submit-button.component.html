@@ -1,0 +1,6 @@
+<button #button 
+(click)="clicked ($event)"
+class="btn btn-primary "
+[ngClass]="buttonClass"
+[disabled]="disabled"
+>{{ getText() }}</button>

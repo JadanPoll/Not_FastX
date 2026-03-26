@@ -1,0 +1,9 @@
+<button *ngIf="config && !config.hide" (click)="fm(fileMan)" class='menu-button'>
+    <fa-icon icon="folder-open" ></fa-icon>
+</button>
+      
+<ng-template #fileMan let-modal>
+    <iframe src="../user/file-manager" [ngStyle]="{ height: getH() }">
+
+    </iframe>
+</ng-template>

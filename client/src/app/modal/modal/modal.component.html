@@ -1,0 +1,17 @@
+<div class='card'>
+  <div class='card-body'>
+      <h4 *ngIf="Title ()" class='card-title' [innerHtml]="Title()"></h4>
+      <div *ngIf="Content ()" [innerHtml]="Content ()"></div>
+      <div>
+        <span *ngIf="Home()" class="me-2">
+          <a [href]="homeLink()" >Home</a>
+        </span>
+        <span *ngIf="More ()">
+          <button class="btn btn-link p-0" (click)="toggleDetails ()">Details</button>
+          <textarea *ngIf="details ()" cols="10" class="form-control " [disabled]="true">{{ More () }}</textarea>
+        </span>
+      </div>
+      
+      
+  </div>
+</div>

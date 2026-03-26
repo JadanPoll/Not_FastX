@@ -1,0 +1,5 @@
+<fx-client-input></fx-client-input>
+<div #scroll class='scroll d-flex justify-content-center' [ngStyle]="{ display: inLobby() ? 'none': 'block' }"></div>
+<small *ngIf="noty" [innerHtml]="noty" class="noty p-1"></small>
+<fx-client-client-comm></fx-client-client-comm>
+<fx-client-clipboard></fx-client-clipboard>

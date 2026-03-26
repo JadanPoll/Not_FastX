@@ -1,0 +1,6 @@
+<div class="form-group">
+  <label class="form-label">Resolution</label>
+  <select class="form-control"  [(ngModel)]="geometry" (change)="updateGeometry()">
+    <option *ngFor="let g of geoms" [value]="g.value">{{ g.name }}</option>
+  </select>
+</div>

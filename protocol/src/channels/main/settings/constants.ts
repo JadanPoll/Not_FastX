@@ -1,0 +1,21 @@
+export const CSS_DPI = 96;
+export const MM_PER_PIXEL = 0.264583333;
+
+export enum SETTING {
+    KEYBOARD = 1,
+    GEOMETRY,
+    NETWORK_AUTODETECT,
+    COMPRESSION,
+    FRAME_RATE,
+    FRAME_WINDOW,
+    SMALL_BLOCK_IMAGE_FORMAT,
+    BIG_BLOCK_IMAGE_FORMAT,
+    BIG_BLOCK_MINIMUM_SIZE,
+    HIGH_QUALITY_UPGRADES,
+}
+export enum LOCALSETTING {
+    SCALING = 1,
+}
+
+export const MIN_WIDTH = 320;
+export const MIN_HEIGHT = 240;

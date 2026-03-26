@@ -1,0 +1,11 @@
+<router-outlet></router-outlet>
+<ng-template #terminate let-modal>
+    <div class="modal-body">
+        Are you sure you want to terminate this session?
+       
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-light" (click)="modal.dismiss()">No</button>
+        <button class="btn btn-primary" (click)="modal.close()">Yes</button>
+    </div>
+</ng-template>

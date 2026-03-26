@@ -1,0 +1,191 @@
+<!--
+<div class="form-check" [formGroup]="form">
+    <input type="checkbox" class="form-check-input" formControlName="enable"> 
+    <label class="form-check-label">Enable Sharing</label>
+</div>
+-->
+<div style="overflow:scroll">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 [ngClass]="{ 'text-primary': !isCollapsed('shareId') }"
+            (click)="toggleCollapse('shareId')"
+            style="cursor: pointer"
+            ><fa-icon icon="user-plus"></fa-icon>&nbsp;Share with users</h5>
+            <div *ngIf="isCollapsed('shareId')" class="text-muted">
+                <span *ngIf="sharingUsers.length">Shared with</span>&nbsp;
+                <span *ngFor="let u of sharingUsers; last as l">
+                    <span *ngIf="l && (sharingUsers.length > 1)">and&nbsp;</span>
+                    <span>{{ u.name }}<span *ngIf="!l">,&nbsp;</span></span>
+                </span>
+            </div>
+            <div [ngbCollapse]="isCollapsed('shareId')">
+                <div class="mb-2">
+                    <form [formGroup]="addSharer" class="mb-3" (submit)="addSharingUser()">
+                        <div class="form-inline input-group input-group" >
+                            <div *ngIf="0" ngbDropdown container="body" class="d-inline-block input-group input-group-prepend">
+                                <button type="button" class="btn btn-outline-primary" id="dropdownBasic3" ngbDropdownToggle>
+                                    {{ getShareType(getShareTypeVal()).name }}
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
+                                    <div ngbDropdownItem *ngFor="let t of types"
+                                        (click)="setShareTypeVal(t.value)"
+                                        class="dropdown-item btn btn-link"
+                                    >
+                                        {{ t.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <input type="text" 
+                                class="form-control  col" 
+                                formControlName="name"
+                                (keyup)="onAddShare()" 
+                                required="required"
+                                placeholder="Add a name and press Enter"
+                            />
+    
+                            <div ngbDropdown container="body" class="d-inline-block " placement="bottom-right">
+                                <button  type="button"  class="btn btn-outline-primary" id="dropdownBasic4" ngbDropdownToggle>
+                                    {{ getShareRole(getShareRoleVal()).name }}
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic4">
+                                    <div ngbDropdownItem *ngFor="let r of roles"
+                                        (click)="setShareRoleVal(r.value)"
+                                        class="dropdown-item btn btn-link"
+                                    >
+                                        {{ r.name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div style="max-height: 800px; overflow:scroll;">
+                        <table class="table table-hover" style="max-height: 600px;">
+                            <tbody>
+                                <tr *ngFor="let u of sharingUsers" >
+                                    <th class="border-0">{{ u.name}} </th> 
+                                    <td *ngIf="0" class="border-0 text-muted">{{ u.type }}</td>
+                                    <td class="border-0 d-flex justify-content-end">
+                                        <div ngbDropdown container="body" class="d-inline-block"   placement="bottom-right"
+                                      >
+                                            <button  type="button"  class="btn btn-link" id="dropdownBasic5" ngbDropdownToggle>
+                                                {{ getShareRole(u.role).name }}
+                                            </button>
+                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic4">
+                                                <div ngbDropdownItem *ngFor="let r of roles"
+                                                    (click)="setUserShareRoleVal(u, r.value)"
+                                                    class="dropdown-item btn btn-link"
+                                                >
+                                                    {{ r.name }}
+                                                </div>
+                                                <div class="dropdown-divider"></div>
+                                                <div ngbDropdownItem  class="dropdown-item btn btn-link" (click)="removeUser(u.name)">
+                                                    Remove
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>   
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isCollapsed('shareId')" class="card-body border-top">
+            <div class="mb-3">
+                <footer-close
+                (submit)="onSubmit ($event)"
+                ></footer-close>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5  style="cursor: pointer"
+            [ngClass]="{ 'text-primary': !isCollapsed('linkId') }"
+             (click)="toggleCollapse('linkId')"><fa-icon icon="link"></fa-icon>&nbsp;Public link</h5> 
+            <p *ngIf="isCollapsed('linkId')">
+                {{ (getVisibilityObject(getAnonVisibility())).desc }}  
+                
+                <span *ngIf="getAnonVisibility()" class="float-end">
+                    <button class="btn btn-link" (click)="copyLink()"
+                    placement="top"
+                    ngbPopover="Copied!"
+                    >Copy Link</button>
+                </span>
+            </p>
+            <div [ngbCollapse]="isCollapsed('linkId')" >
+                <div class="">
+                    
+                    <div class="mb-3 d-flex justify-content-between border p-2">
+                        <div class="d-inline-block">
+                            <div ngbDropdown container="body" class="d-inline-block">
+                                <div class="btn btn-link p-0" id="dropdownBasic1" ngbDropdownToggle>
+                                    <strong>{{ (getVisibilityObject(getAnonVisibility())).name }}</strong>                
+                                </div>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <div ngbDropdownItem *ngFor="let r of anonUserVisibility"
+                                        (click)="setAnonVisibility(r.value)"
+                                        class="dropdown-item btn btn-link"
+                                        >
+                                        {{ r.name }}
+                                    </div>
+                                </div>
+                            </div> 
+                            <br/>
+                            <small>{{ (getVisibilityObject(getAnonVisibility())).desc }}</small>
+                        </div>
+                    
+                        <div class="d-inline-block" *ngIf="getAnonVisibility()" >
+                            <div ngbDropdown class="d-inline-block" placement="bottom-right">
+                                <button class="btn " id="dropdownBasic2" ngbDropdownToggle>
+                                    {{ (getRoleObject(getAnonRole())).name }}
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                    <div ngbDropdownItem *ngFor="let r of anonUserRoles"
+                                        (click)="setAnonRole(r.value)"
+                                        class="dropdown-item btn btn-link"
+                                    >
+                                        {{ r.name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div  *ngIf="getAnonVisibility()" class="mb-3">
+                        <div class="input-group input-group">
+                            <input type="text" class="form-control "  readonly [value]="sharingLink" />
+                            <span class="input-group-append"
+                            placement="top"
+                            ngbPopover="Copied!"
+                            >
+                                <button class="btn btn-outline-primary" 
+                                (click)="copyLink()"
+                               
+                            >
+                               Copy Link
+                            </button>
+                            </span>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isCollapsed('linkId')" class="card-body">
+            <footer-close
+            (submit)="onSubmit ($event)"
+            ></footer-close>
+        </div>
+    </div>
+</div>
+
+ 
+    
+        
+
+ 
+

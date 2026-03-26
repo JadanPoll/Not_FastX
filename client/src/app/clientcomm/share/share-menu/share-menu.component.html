@@ -1,0 +1,22 @@
+<div class="bg-light share-menu p-absolute p-1"  >
+    <div class="d-flex justify-content-between" >
+        <div class="px-1">
+            <span *ngIf="isMaster()" class="d-inline-block">
+                <button class="p-0 btn btn-link" (click)="addUserMenu()"><fa-icon icon="user-plus"></fa-icon></button> 
+            </span> 
+            <button class="px-1 py-0 btn btn-link" (click)="toggleLong()">
+                <fa-icon *ngIf="showLong()" icon="eye-slash"></fa-icon>
+                <fa-icon *ngIf="!showLong()" icon="eye"></fa-icon>
+            </button> 
+        </div>
+        <div class="px-2">
+            <div >Sharing</div>
+        </div>
+        <div class="px-1">
+            <button class="p-0 btn btn-link" (click)="hide()"><fa-icon icon="times"></fa-icon></button> 
+        </div>
+    </div>
+    <div *ngIf="showLong()">
+        <fx-client-clients [clients]="clients" [serverData]="serverData" (onResetShare)="resetShare($event)"></fx-client-clients>
+    </div> 
+</div>

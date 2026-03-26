@@ -1,0 +1,27 @@
+<div class='menu-container'>
+	<div class='config-menu'>
+		<div *ngIf="hidden ()" [ngClass]="{ 'small': !touch, 'medium': touch }" style="width:85px"
+			(mouseenter)="unhide()"
+			(click)="click ()"
+		>&nbsp;
+		</div>
+		<span [ngClass]="{ hidden: hidden ()}"
+			class='expanded'  
+			(mouseenter)="unhide()"
+			(mouseleave)="hide()" 
+		>
+			<div>
+				<fx-client-home [config]="getHome ()"></fx-client-home>
+				<app-resize [ngStyle]="{'display': mwm ? 'none' : 'inline' }"></app-resize>
+				<app-fullscreen></app-fullscreen>
+				<app-keyboard [touch]="touch"></app-keyboard>
+				<fx-client-share-button *ngIf="!this.mwm"></fx-client-share-button>
+				<fx-client-file-manager [config]="getFm()"></fx-client-file-manager>
+				<app-settings></app-settings>
+				
+				
+				
+			</div>
+		</span>
+	</div>
+</div>

@@ -1,0 +1,153 @@
+<button (click)='open (content)' class='menu-button'>
+  <fa-icon icon="sliders-h"></fa-icon>
+</button>
+
+<ng-template #content>
+	<section class='modal-body p-4'>
+		<div class="row" *ngIf="clientSettingsArray?.length">
+			<div class="col">
+				<label>Performance settings</label>
+				<div class="mb-3">
+					<select [(ngModel)]="customSettingsId" class="form-control " (change)="onSettingsChange($event)">
+					  <option *ngFor="let c of clientSettingsArray" [value]="c._id" >{{ c.name }}</option>
+					  <option value="__custom__">Custom</option>
+					</select>
+				 </div>
+			</div>
+		</div>
+
+					<div class="row mb-3">
+						<div class="col">
+							<label>
+								<abbr ngbPopover="Never send an image lower than this quality.
+							Higher numbers give better image quality but take more bandwidth">Prioritize</abbr>&nbsp;
+							</label>
+							<div class="d-flex justify-content-between">
+								<label>Bandwidth</label>
+								<label>Image quality</label>
+							</div>
+							<div class="row">
+								<div class="col">
+									<app-slider
+										[min]="compression.min"
+										[max]="compression.max"
+										[step]="compression.step || 1"
+										[(value)]="compression.current"
+										(valueChange)="updateCompression(compression.current)"
+									></app-slider>
+								</div>
+							   
+							</div>
+						</div>
+					</div>
+					<div *ngIf="showBlocks()" class="row mb-3">
+						<div class="col">
+							<label>
+								<abbr ngbPopover="Send a compressed image of this type then send a high res image later">Image format</abbr>
+							</label>
+							<select [(ngModel)]="bigBlockCodec" (change)="sendBigBlock(bigBlockCodec)" class="form-control ">
+								<option *ngFor="let c of codecs" [value]="c.id">{{ c.name }}</option>
+							</select>
+						</div>
+						
+					</div>
+
+					<div class="row" >
+						<div class="col">
+							<div class="form-check">
+								<input 
+								type="checkbox" name="ignore"  
+								class="form-check-input"
+								[(ngModel)]="ignoreFrame"
+								[ngModelOptions]="{standalone: true}"
+								[checked]="ignoreFrame"
+								(change)="saveIgnore(ignoreFrame)" />
+								<label class="form-check-label">Draw window updates immediately</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col">
+							<div class="form-check">
+								<input 
+								type='checkbox' name='highQualityUpgrades'
+								class="form-check-input"
+								[(ngModel)]="highQualityUpgrades" 
+								(change)="sendHighQuality(highQualityUpgrades)" 
+								/> 
+								<label class="form-check-label">Enable high quality upgrades</label>
+							</div>
+						</div>
+					</div>
+					
+			
+					<div class="row">
+						<div class="col">
+							<div class="form-check">
+								<input type='checkbox' name='autoscale' 
+								class="form-check-input"
+								[(ngModel)]="autoadjust" (change)="saveAutoAdjust(autoadjust)" /> 
+								<label class="form-check-label">Automatically adjust network settings</label>
+							</div>
+						</div>
+					</div>
+
+					
+					<div class="row">
+						<div class="col">
+							<abbr ngbPopover="Maximum number of frames that will be sent per second">Frame rate</abbr>&nbsp;
+							<app-slider
+								[disabled]="getDisabled()"
+								[min]="frameRate.min"
+								[max]="frameRate.max"
+								[(value)]="frameRate.current"
+								(valueChange)="updateFrameRate(frameRate.current)"
+							></app-slider>
+						</div>
+					</div>
+					
+					<div *ngIf="showBlocks() && false" class="row">
+						<div class="col">
+							<label>
+								<abbr ngbPopover="Allways send a high resolution image of this type if under the block threshold">Hi Res Format</abbr>
+							</label>
+							<select [(ngModel)]="smallBlockCodec" (change)="sendSmallBlock(smallBlockCodec)" class="form-control ">
+								<option *ngFor="let c of codecs" [value]="c.id">{{ c.name }}</option>
+							</select>  
+						</div>
+					   
+					</div>
+					<div *ngIf="showBlocks() && false" class="row">
+						<div class="col">
+							<label>
+								<abbr ngbPopover="Minimum size for big block codecs to take effect">Hi Res Maximum Size</abbr>
+							</label>
+							<select [(ngModel)]="blockSize" (change)="sendBigBlockSize(blockSize)" class="form-control ">
+								<option *ngFor="let b of blocks" [ngValue]="b">{{ b.width }}x{{ b.height }}</option>
+							</select>
+						</div>
+						
+					</div>
+
+					<div class="row mb-3">
+						<div class="col">
+							<app-resize (onUpdate)="disableScaling($event)"></app-resize>
+						</div>
+					</div>
+				
+					
+					<div class="row mb-3">
+						<div class="col">
+							<label>
+								<abbr ngbPopover="Client Side Scaling">Scaling</abbr>
+							</label>
+							<select class="form-control"   [(ngModel)]="zoom" (change)="updateScaling()">
+								<option *ngFor="let g of scales" [value]="g.value">{{ g.name }}</option>
+							</select>
+						</div>
+					</div>
+			
+		
+	</section>
+</ng-template>

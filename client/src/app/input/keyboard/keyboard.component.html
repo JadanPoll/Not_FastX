@@ -1,0 +1,37 @@
+<div [ngClass]='{ "mouse-position": showMouse() }'>
+	<div class="bottom-bar expand" >
+		<div *ngIf="0" class="d-inline">
+			<select [(ngModel)]="vk" (change)="changeLayout (vk)">
+				<option *ngFor="let k of layoutNames" [value]="k">{{k | titlecase}}</option>
+			</select>
+		</div>
+		<div class="d-inline" *ngIf="size !== sizes.FULL">
+			<select [(ngModel)]="keyType" (change)="changeType (keyType)">
+				<option *ngIf="showFull ()" [value]="types.full">Full</option>
+				<option [value]="types.keyboard">Compact</option>
+				<option [value]="types.keypad">Keypad</option>
+				<option [value]="types.mouse">Mouse</option>
+				<option [value]="types.min">
+					{{ keyType !== types.min ? "Hide" : "Input" }}</option>
+			</select>
+		</div>
+	</div>
+	<div  class="keyboardContainer" [ngClass]='{ "hidden": showMouse() }' >
+		<div #keyboard class="simple-keyboard-main"></div>
+		<div #keypad class="extrakeys">
+			<div class="controlArrows">
+				<div class="simple-keyboard-control"></div>
+				<div class="simple-keyboard-arrows"></div>
+			</div>
+
+			<div class="numPad">
+				<div class="simple-keyboard-numpad"></div>
+				<div class="simple-keyboard-numpadEnd"></div>
+			</div>
+		</div>
+		
+	</div>
+	<div  *ngIf="showMouse ()" >
+		<fx-client-virtual-mouse   ></fx-client-virtual-mouse>
+	</div>
+</div>

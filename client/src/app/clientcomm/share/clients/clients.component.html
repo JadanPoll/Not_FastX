@@ -1,0 +1,9 @@
+<div  *ngFor="let c of clients" class="client-item">
+    <fx-client-client-user 
+        [client]="c" 
+        [master]="master" 
+        [serverData]="serverData" 
+        (onResetShare)="resetShare($event)"
+        [me]="me"
+    ></fx-client-client-user>
+</div>   

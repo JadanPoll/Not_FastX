@@ -1,0 +1,13 @@
+<div class="share">
+    <fx-share-guest-login *ngIf="showGuestLogin()" 
+        [resetShare]="resetShare"
+        (onHelloSent)="onHelloSent($event)" 
+        (onCancel)="onCancel()"
+        class="guest-login m-auto fixed-top w-50"
+        ></fx-share-guest-login>
+
+    <fx-client-share-menu *ngIf="showShare() && !showGuestLogin()" [id]="id" (onResetShare)="doResetShare($event)"></fx-client-share-menu>
+    <fx-client-lobby *ngIf="!showGuestLogin()"></fx-client-lobby>
+</div>
+
+

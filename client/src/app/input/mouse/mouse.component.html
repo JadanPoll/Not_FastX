@@ -1,0 +1,18 @@
+<div>
+    <div style="display:flex; align-items: stretch" >
+        <button class="left-btn mousebtn" [ngClass]="{ pressed: isPressed('l') }" (click)="click ('l')">
+          L
+        </button>
+        <div >
+          <button class="middle middle-click middle-btn  mousebtn" [ngClass]="{ pressed: isPressed('m') }" (click)="click ('m')">
+              M
+            </button>
+        </div>
+      
+        <button class="right-btn mousebtn" [ngClass]="{ pressed: isPressed('r') }"  (click)="click ('r')">
+          R
+          </button>
+      </div>
+
+</div>
+
